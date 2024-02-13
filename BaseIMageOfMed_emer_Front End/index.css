@@ -1,0 +1,671 @@
+*{
+    padding: 0;
+    border: 0;
+    transition:0.4s ease-in-out; 
+}
+body{
+    background-image: linear-gradient(rgb(140, 211, 205),rgb(197, 195, 195));
+    background-size: cover;
+    background-position: center;
+    width: auto;
+    height: 90vh;
+
+}
+/* button{
+    width: fit-content;
+    border: 2px solid;
+    background-color: #3f6769;
+    border-radius: 5px;
+    font-size: 18px;
+    text-align: center;
+    color: white;
+    cursor: pointer;
+    padding: 10px;
+} */
+.index{
+    /* border: 1px solid; */
+    height: 110px;
+    display: flex;
+   
+    justify-content: space-between;
+    align-items: center;
+    border: #3f6769 1px solid;
+}
+.indexPage{
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    
+    z-index: 1;
+}
+.register,.login{
+    width: 35%;
+    padding-top: 2%;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    border: solid 2px;
+    display: flex;
+    flex-direction: column;
+    height: 500px;
+    background-color: rgb(104, 173, 175);
+    border-radius: 10px;
+    transition: 0.5s ease-in-out;
+}
+
+.login{
+   margin-top: 4%;
+   height: 300px;
+  
+}
+
+/* header */
+.header{
+    height: 110px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+   
+    border: #3f6769 1px solid;
+}
+.logo{
+    cursor: pointer;
+    background-color: transparent;
+    z-index: 2;
+    padding: 10px;
+    margin: 20px;
+    border-radius: 5px;
+    width: 200px;
+    display: flex;
+    align-items:center;
+    justify-content: space-between;
+   
+    border: 1px solid;
+
+}
+
+/* homeDiv */
+.homeDiv{
+    height: 85vh;
+    /* border: 1px solid; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.homeDiv h1{
+   
+    font-size: 30px;
+    font-weight: bold;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+/* navbar */
+.navbar{
+    width: 1200px;
+    height: 100px;
+    margin: 30px;
+    transition: 1s ease;
+    z-index: 3;
+}
+ul{
+    float: right;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left:50px ;
+    margin-top: 20px;
+}
+ul li{
+    list-style: none;
+    margin-right: 50px;
+    margin-bottom: 10px;
+    font-size: 25px;
+    font-weight: bold;
+}
+.navbar ul li a{
+    text-decoration: none;
+    color: #3f6769;
+    font-family: 'Times New Roman', Times, serif;
+    transition: 0.5s ease-in-out;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;  
+}
+ul li a:hover{
+    color: #999;
+}
+#account{
+    width: 130px;
+    cursor: pointer;
+}
+#accountImg{
+    width: 30x;
+    height: 30px;
+    border-radius: 25px;
+}
+.dropdown{
+   
+    text-align: center;
+    color: white;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #20464b;
+    width: 40x;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    z-index: 1;
+    border: 2px black solid;
+    border-radius: 10px;
+    font-size: 15px;
+    text-align: center;
+}
+.dropdown-content a{
+    text-align: center;
+    color: white;
+}
+
+.dropdown-content.show {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    justify-content: space-around;
+    color: white;
+}
+
+.elements{
+    padding: 10px;
+    margin-right: 100px;
+}
+#registerLogin, #submit{
+    color: rgb(154, 228, 80);   
+}
+#registerLogin{
+    font-size: 20px;
+    text-decoration: none;
+}
+#logoImg{
+    width: 40px;
+    height:55px;
+    background-color: transparent;
+    border: #611715 2px solid;
+    border-radius: 20px;
+}
+
+#indexContent a{
+    font-size: 30px;
+    color: black;
+    text-decoration: none;
+}
+form{
+    width:80%;
+    border: solid 2px;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    height: 80%;
+    border: 10px;
+   
+}
+input {
+    width: 100%;
+    background-color: rgb(177, 211, 206);
+    height: 30px;
+    border: 2px solid rgb(116, 105, 105);
+    border-radius: 5px;
+    padding-left: 15px;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    color: rgb(73, 90, 86);
+    font-size: 14px;
+    font-weight:600;
+    font-family: 'Times New Roman', Times, serif;
+
+}
+#table{
+    
+    width: 100%;
+    overflow: hidden;
+  
+}
+#table tr,td{
+    /* border: 2px solid; */
+    height: 20px;
+    margin: 10px;
+    padding: 5px;
+   
+    background-color: rgba(21, 175, 149, 0.11);
+   
+    
+    margin-bottom: 3px;
+}
+#submit{
+    border-top: 50px;
+    width: 80px;
+    height: 30px;
+    columns: red;
+    background-color: rgb(68, 100, 100);
+    border: 1px solid;
+    border-radius: 10px;
+    cursor: pointer;
+}
+#request, #response{
+    color: rgb(154, 228, 80);
+    background-color: rgb(68, 100, 100) ;
+    border: white solid 1px;
+    border-radius: 5px;
+    width: 30px;
+    cursor: pointer;
+    text-align: center;
+}
+#requestresponse {
+    position: relative;
+    color: rgb(154, 228, 80) ;
+}
+#requestBody, #responseBody{
+    opacity: 0;
+    width: 0px;
+    height: 0px;
+    border: 2px solid;
+    z-index: 3;
+    position:absolute;
+    float: left;
+    left: 20px;
+    border-radius: 10px;
+    padding: 10px;
+    overflow: scroll;
+
+}
+#requestContent,#responseContent{
+    opacity: 0.7;
+}
+
+/* page */
+.page{
+    /* border: 2px solid; */
+    height: auto;
+    margin: 3px;
+   
+    display: flex;
+    flex-direction: column;
+    /* position: fixed; */
+    width: 100%;
+}
+
+.detailsForm{
+    width: 0px;
+    height: 0px;
+    display: none;
+}
+
+.patientPatientEdit, .patientPatientView, .patientPatientDelete, 
+.comorbidityComorbidityEdit,.comorbidityComorbidityView,.comorbidityComorbidityDelete,
+.disabilityDisabilityEdit,.disabilityDisabilityView,.disabilityDisabilityDelete,
+.commentCommentEdit,.commentCommentView,.commentCommentDelete{
+    width:fit-content ;
+    height: 30px;
+   
+}
+
+#patientPatientEdit, #patientPatientView, #patientPatientDelete,
+#comorbidityComorbidityEdit,#comorbidityComorbidityView,#comorbidityComorbidityDelete,
+#disabilityDisabilityEdit,#disabilityDisabilityView,#disabilityDisabilityDelete,
+#vitalsVitalsEdit,#vitalsVitalsView,#vitalsVitalsDelete,
+#commentCommentEdit,#commentCommentView,#commentCommentDelete
+{
+   background-color:  #3f6769;
+   cursor: pointer;
+   border: 1px solid white;
+   color: white;
+   width: 50px;
+   height: 30px;
+   border-radius: 8px;
+
+}
+#patientPatientEdit a, #patientPatientView a, #patientPatientDelete a{ 
+   
+    cursor: pointer;
+    text-decoration: none;
+    color: white;
+   
+ }
+.filterSearch{
+    width: 100%;
+    height: fit-content;
+ 
+    display: flex;
+    flex-direction: column;
+}
+#addPatient,#addComorbidity,#addDisability,#addComment{
+   width: 100%;
+   height:50px;
+   
+}
+#filterSearch{
+    height: 50px;
+    display: flex;
+    margin-bottom: 5px;
+    align-items: center;
+    flex-direction: row;
+}
+.infoTableDiv{
+    width: auto;
+    height: 65vh ;
+    display: flex;
+    /* border: 2px solid black; */
+    justify-content: center;
+    border-radius: 10px;
+    margin-top: 20px;
+}
+
+#addNewPatient button,#addNewComorbidity button,#addNewDisability button,#addNewComment button,#addVitals button{
+    float: right;
+    width: inherit;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 20px;
+    height: inherit;
+    margin: 5px 20px 5px 20px;
+    border-radius: 10px;
+    color: white;
+    background-color: #80130f;
+    padding: 10px;
+}
+#searchInput{
+    width: 500px;
+    height: 45px;
+    font-size: 15px;
+    padding: 20px;
+    text-align:left;
+    border:2px solid;
+    border-radius: 5px;
+}
+.search{
+    width: 800px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+#searchbar{
+    width: fit-content;
+    border: 2px solid;
+    background-color: #3f6769;
+    border-radius: 5px;
+    font-size: 18px;
+    text-align: center;
+    color: white;
+    cursor: pointer;
+    padding: 10px;
+}
+#fetchDataForm,#patientView,#patientEdit,#patientDelete{
+    width: 0px;
+    height: 0px;
+    opacity: 0;
+}
+.hiddenInput{
+    width: 0;
+    height:0;
+    opacity: 0;
+    border: none;
+}
+#patientEditForm{
+
+}
+#patientEditbutton,#patientEditCancle, #addPatientbutton, #addPatientCancle{
+    width: 55px;
+    height: fit-content;
+    background-color: #3f6769;
+    border: 1px solid;
+    border-radius: 5px;
+    padding: 5px;
+    float: right;
+    text-align: center;
+    cursor: pointer;
+    color: white;
+}
+#patientInfo{
+    justify-content: center;
+    display: flex;
+
+}
+#patientInfo table{
+    border: 1px solid black;
+}
+#patientViewPage{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+  
+}
+#patientViewInfo{
+    display: flex;
+    flex-direction: row;
+    width: 98%;
+    height: 590px;
+    padding: 5px;
+   
+   
+}
+.patientComorbidityDisability, .patientVitals, .patientComments {
+    flex: 1;
+    padding: 4px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+
+
+}
+#patientComorbities,#patientDisabilities{
+    height: 50%; 
+    border: 1px solid black;
+    text-align: center;
+    background-color: rgb(99, 168, 163);
+   border-radius: 10px;
+   display: flex;
+   flex-direction: column;
+}
+#patientVitals,#patientComments{
+    border: 1px solid black;
+    text-align: center;
+    height: 100%;
+    background-color: rgb(99, 168, 163);
+   border-radius: 10px;
+   display: flex;
+   flex-direction: column;
+}
+.patientComorbitiesHead,.patientDisabilitiesHead,.patientVitalsHead,.patientCommentsHead{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+}
+.patientComorbitiesHead h3, .patientDisabilitiesHead h3,.patientVitalsHead h3,.patientCommentsHead h3{
+    width: 70%;
+}
+
+#addPatientComorbidityButton, #addPatientCommentButton,#addPatientVitalsButton,#addPatientDisabilityButton,#addPatientComorbidityButtonConfirm,
+#addPatientDetailsCancle,#addPatientDisabiltyButtonConfirm,#addPatientVitalsButtonConfirm,#addPatientCommentButtonConfirm,#addComorbidityButtonConfirm,
+#addDisabilityButtonConfirm,#editComorbidityButtonConfirm,#addVitalsButtonConfirm,#addCommentButtonConfirm,#editVitalsButtonConfirm,#editCommentButtonConfirm{
+    background-color:  #3f6769;
+    cursor: pointer;
+    border: 1px solid white;
+    color: white;
+    width: 120px;
+    height: 34px;
+    border-radius: 10px;
+}
+.patientDetailsBody,.infoTableDiv{
+   
+    overflow-y:scroll;
+
+    /* border: 1px solid; */
+    
+    justify-content: center;
+    display: flex;
+    overflow-x: hidden;
+    
+}
+.tableDetails {
+    height: fit-content;
+   
+    border: 2px solid; 
+    border-radius: 10px;
+    background-color:rgb(99, 168, 163) 
+}
+.tableDetails tr td  {
+    border-spacing: 20px;
+}
+.patientDetailsBody table thead,.infoTableDiv table thead{
+    position: sticky; 
+    top: 0; 
+    background-color:   rgb(99, 168, 163);
+    height: 30px;
+    padding: 30px;
+}
+
+/* scroll Bar  */
+/* Style the scrollbar */
+.patientDetailsBody::-webkit-scrollbar,.infoTableDiv::-webkit-scrollbar{
+    width: 8px; /* Width of the scrollbar */
+}
+
+/* Track */
+.patientDetailsBody::-webkit-scrollbar-track,.infoTableDiv::-webkit-scrollbar-track{
+    background: rgba(72, 109, 101, 0.1); /* Color of the track */
+}
+
+/* Handle */
+.patientDetailsBody::-webkit-scrollbar-thumb,.infoTableDiv::-webkit-scrollbar-thumb{
+    background: rgba(58, 28, 28, 0.3); /* Color of the handle */
+    border-radius: 5px; /* Roundness of the handle */
+}
+
+/* Handle on hover */
+.patientDetailsBody::-webkit-scrollbar-thumb:hover,.infoTableDiv::-webkit-scrollbar-thumb:hover{
+    background: rgba(131, 123, 123, 0.5); /* Color of the handle on hover */
+}
+
+.patientComorbiditiesTable,.patientDisabilitiesTable,.patientVitalsTable,.patientCommentsTable{
+  
+    width: 98%;
+    border-spacing: 0;
+    height: fit-content;
+
+}
+.patientComorbiditiesTable tr td,.patientDisabilitiesTable tr td,.patientVitalsTable tr td,.patientCommentsTable tr td{
+    border: 1px solid;
+    height: fit-content;
+}
+
+.patientEditcontainer,.addPatientcontainer{
+    display: flex;
+    flex: row;
+
+}
+.patientInfoEdit,.patientInfoEdit2,.patientInfoEdit3,.addNewPatientDiv,.addNewPatientDiv2,.addNewPatientDiv3{
+    flex: 1;
+    padding: 10px;
+}
+#patientEditTable,#addNewPatientTable{
+    width: 450px;
+    height: inherit;
+    border: 1px solid;
+    border-spacing: 0;
+    border-radius: 10px;
+    background-color: rgb(99, 168, 163) ;
+    margin-left: 50px;
+}
+
+#patientEditTable tr, #addNewPatientTable tr{
+    width: 100%;
+}
+#patientEditTable tr td, #addNewPatientTable tr td{
+    
+}
+.addPatientComorbiditypopup,.addPatientDetailspopup {
+    display: none; /* Hide the popup by default */
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color:  rgb(99, 168, 163);
+    padding: 20px;
+    border: 3px solid #ccc;
+    border-radius: 5px;
+    z-index: 1000;
+    min-width: 400px;
+    max-width: 1000px;
+   
+    
+    min-height: 350px;
+    
+    border-radius: 10px;
+    display:table-column;
+  }
+
+  /* Styles for the overlay background */
+  .overlay {
+    display: none; /* Hide the overlay by default */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+    z-index: 999;
+  }
+  .entitySelectAndChoose{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+ 
+#addPatientComorbidityForm, #addPatientDisabilityForm,
+#addPatientVitalsForm,#addPatientCommentForm ,#addComorbidityForm,#addDisabilityForm{
+    width: 100%;
+    border: 1.5px solid;
+    border-radius: 5px;
+    height:inherit;
+    min-height: 250px;
+    /* border: 1px solid; */
+}
+#addPatientComorbidityForm option, #addPatientDisabilityForm option,#addPatientVitalsForm option,#addPatientCommentForm option,
+#addComorbidityForm option,#addDisabilityForm option{
+    width: 100%;
+    /* border: #3f6769 1px solid; */
+}
+#addPatientComorbidityFormTable, #addPatientDisabilityFormTable, #addPatientCommentFormTable, #addPatientVitalsFormTable,#addPatientComorbidityFormTable,
+#addComorbidityFormTable,#addDisabilityFormTable{
+    width: 100%;
+    /* border: #3f6769 1px solid; */
+    align-items: center;
+    justify-content: center;
+    /* border-spacing: 0; */
+    flex:2;
+}
+
+
+#addPatientComorbidityFormTable tr td, #addPatientDisabilityFormTable tr td,#addPatientCommentFormTable tr td, #addPatientVitalsFormTable tr td,
+#addDisabilityFormTable tr td,#addComorbidityFormTable tr td{
+    /* border: black 1px solid; */
+    align-items: center;
+    /* border-spacing: 20px; */
+    text-align: center;
+   
+}
+#newPatientComorbiditySelect,#newPatientDisabilitySelect,#newPatientSelect{
+    width: 200px;
+    height: 35px;
+    border: #611715 solid 2px;
+    border-radius: 5px;
+    overflow-y: auto;
+
+}
+#addCancleButtons{
+    width: 100%;
+}

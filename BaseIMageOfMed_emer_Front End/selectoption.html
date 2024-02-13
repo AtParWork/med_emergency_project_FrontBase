@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Select Items Template</title>
+</head>
+<body>
+
+<!-- Select dropdown menu -->
+<select id="items">
+  <option value="item1">Item 1</option>
+  <option value="item2">Item 2</option>
+  <option value="item3">Item 3</option>
+  <!-- Add more options as needed -->
+</select>
+
+<!-- Script to handle the selection -->
+<script>
+  // Get the select element
+  const selectElement = document.getElementById("items");
+
+  // Event listener for when an option is selected
+  selectElement.addEventListener("change", function() {
+    // Get the selected option's value
+    const selectedValue = selectElement.value;
+    // Do something with the selected value
+    console.log("Selected value:", selectedValue);
+  });
+</script>
+
+</body>
+</html>

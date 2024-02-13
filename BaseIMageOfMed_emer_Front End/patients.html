@@ -1,0 +1,180 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="index.css">
+    <script src="script.js"></script>
+</head>
+<body>
+
+<div id="requestBody"><h3>Request</h3> <div class="requestContent"><h4>Request Body</h4>
+<pre>
+{
+    "username": "string",
+    "password": "string",
+    "rememberMe": true
+  }
+  request URL: http://localhost:8080/api/authenticate
+</pre>
+</div></div>
+<div id="responseBody"><h4>Response</h4><div class="requestContent"><h4>Response Body</h4>
+<pre>
+    {
+        "id_token": "string"
+      }
+</pre>
+</div></div>
+
+<!-- Header -->
+    <div class="header">
+        <div class="logo">
+            <a href="home.html" id="logo"><img src="logo1.png" alt="logo" id="logoImg"></a>
+            <h2>Medical_PRO</h2>
+        </div>
+        <div class="navbar">
+            <ul>
+                <li><a href="home.html">Home</a>
+                <li><a href="#" onclick="redirectPatients()">Patients</a></li>
+                <li><a href="#" onclick="redirectComordities()">Comorbidities</a></li>
+                <li><a href="#" onclick="redirectDisabilities()">Disabilities</a></li>
+                <li><a href="#" onclick="redirectVitals()">Vitals</a></li>
+                <li><a href="comments.html">Comments</a></li>
+                <li><a href="users.html">Users/Doctors</a></li>
+                <li><a id="account" >Account <img src="male.jpg" alt="accountImg" id="accountImg"></a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="page">
+
+        <form action="patientView.html" hidden id="patientView" class="detailsForm" style="display: none;"></form>
+        <form action="patientEdit.html" hidden id="patientEdit"  class="detailsForm" style="display: none;"></form>
+        <form action="" id="patientDelete" hidden class="detailsForm" style="display: none;"></form>
+        <form action="fetchData" method="GET" hidden id="fetchDataForm" style="display: none;"></form>
+        <div class="filterSearch">
+            <div id="addPatient">
+                <a href="addNewPatient.html" id="addNewPatient" ><button style="cursor: pointer;">Add Patient</button></a>
+            </div>
+            <div id="filterSearch">
+                <div class="search" >
+                    <input type="text" name="searchInput" id="searchInput" style="background-color: rgb(217, 221, 224);" placeholder="enter any details">
+                    <button id="searchbar">search</button>
+                </div>
+                <div class="filter">
+                   
+                </div>
+            </div>
+        </div>
+        <table class="tableDetails" >
+            <tr>
+                <th>ID</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>Age</th>
+                <th>Gender</th>
+                <th>Contact</th>
+                <th colspan="3">info</th>
+                
+            
+            </tr>
+            <tbody id="patientList">
+                 <!-- <td><input readonly form="patientView" type="text" name="status" id="status" value="Serious"/></td> -->
+                
+            </tbody>
+        <script>
+            
+            const username=localStorage.getItem('username');
+            const password=localStorage.getItem('password');
+           
+            document.addEventListener('DOMContentLoaded', () => {
+                const queryString = window.location.search;
+                const urlParams = new URLSearchParams(queryString);
+                const userDataString = urlParams.get('data');
+                if (userDataString) {
+                    const patients = JSON.parse(decodeURIComponent(userDataString));
+                    console.log("Patients:"+patients);
+                    displayUserData(patients);
+                }
+                    
+                   
+            });
+         
+           
+          
+    
+            function displayUserData(patientsData) {
+              
+                const patientListContainer = document.getElementById('patientList');
+                console.log("PatientsData"+patientsData);
+                
+        patientsData.forEach(patient => {
+        console.log(patient);
+        console.log(patient.id);
+        const patientInfo = `
+            <tr>
+                <td><input readonly form="patientView" type="number" name="id" id="id" value="${patient.id}"/>
+                <input readonly hidden class="hiddenInput" form="patientEdit" type="number" name="id" id="id" value="${patient.id}"/>
+                <input readonly hidden class="hiddenInput" form="patientDelete" type="number" name="id" id="id" value="${patient.id}"/>
+                </td>
+
+                <td>
+                    <input readonly form="patientView" type="text" name="firstName" id="firstName" value="${patient.firstName}"/>
+                <input readonly hidden class="hiddenInput" form="patientEdit" type="text" name="firstName" id="firstName" value="${patient.firstName}"/>
+                <input readonly hidden class="hiddenInput" form="patientDelete" type="text" name="firstName" id="firstName" value="${patient.firstName}"/>
+                </td>
+
+                <td>
+                    <input readonly form="patientView" type="text"  name="lastName" id="lastName" value="${patient.lastName}"/>
+                <input readonly hidden class="hiddenInput"  form="patientEdit" type="text"  name="lastName" id="lastName" value="${patient.lastName}"/>
+                <input readonly hidden class="hiddenInput" form="patientDelete" type="text"  name="lastName" id="lastName" value="${patient.lastName}"/>
+                </td>
+
+                <td>
+                    <input readonly form="patientView" type="email" name="email" id="email" value="${patient.email}"/>
+                <input readonly hidden class="hiddenInput" form="patientEdit" type="email" name="email" id="email" value="${patient.email}"/>
+                <input readonly hidden class="hiddenInput" form="patientDelete" type="email" name="email" id="email" value="${patient.email}"/>
+                </td>
+                
+                <td>
+                <input readonly form="patientView" type="number" name="age" id="age" value="${patient.age}"/>
+                <input readonly hidden class="hiddenInput" form="patientEdit" type="number" name="age" id="age" value="${patient.age}"/>
+                <input readonly hidden class="hiddenInput" form="patientDelete" type="number" name="age" id="age" value="${patient.age}"/>
+                </td>
+
+                <td>
+                    <input readonly  form="patientView" type="text" name="gender" id="gender" value="${patient.gender}"/>
+                <input readonly hidden class="hiddenInput" form="patientEdit" type="text" name="gender" id="gender" value="${patient.gender}"/>
+                <input readonly hidden class="hiddenInput" form="patientDelete" type="text" name="gender" id="gender" value="${patient.gender}"/>
+                </td>
+                
+                <td>
+                    <input readonly form="patientView" type="number" name="contact" id="contact" value="${patient.mobileNumber}"/>
+                <input readonly  hidden class="hiddenInput" form="patientEdit" type="number" name="contact" id="contact" value="${patient.mobileNumber}"/>
+                <input readonly hidden class="hiddenInput" form="patientDelete" type="number" name="contact" id="contact" value="${patient.mobileNumber}"/>
+                </td>
+                
+                <td class="patientPatientEdit">
+                    <a href="patientEdit.html?username=${username}&password=${password}&id=${patient.id}&firstName=${patient.firstName}&lastName=${patient.lastName}&email=${patient.email}&age=${patient.age}&gender=${patient.gender}&mobileNumber=${patient.mobileNumber}">
+                <button id="patientPatientEdit">
+                    Edit
+                </button></a></td>
+
+                <td class="patientPatientView">
+                    <button id="patientPatientView" onclick="redirectToPatientView('${patient.id}')">View</button>
+                </td>
+                <td class="patientPatientDelete"><button id="patientPatientDelete" ><a href="patientDelete">Delete</a></button></td>
+                
+            </tr>
+            
+        `;
+        patientListContainer.innerHTML += patientInfo;
+      
+    });
+}
+        </script>
+        </table>
+    </div>
+
+</body>
+</html>

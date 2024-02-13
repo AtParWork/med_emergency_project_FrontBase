@@ -1,0 +1,59 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="index.css">
+    <script src="script.js"></script>
+</head>
+<body style="display: flex;flex-direction: column;">
+    <div id="requestBody"><h3>Request</h3> <div class="requestContent"><h4>Request Body</h4>
+        <pre>
+        {
+            "username": "string",
+            "password": "string",
+            "rememberMe": true
+          }
+          request URL: http://localhost:8080/api/authenticate
+        </pre>
+        </div></div>
+        <div id="responseBody"><h4>Response</h4><div class="requestContent"><h4>Response Body</h4>
+        <pre>
+            {
+                "id_token": "string"
+              }
+        </pre>
+        </div></div>
+        
+        <!-- Header -->
+            <div class="header">
+                <div class="logo">
+                    <a href="home.html" id="logo"><img src="logo1.png" alt="logo" id="logoImg"></a>
+                    <h2>Medical_PRO</h2>
+                </div>
+                <div class="navbar">
+                    <ul>
+                        <li><a href="home.html">Home</a>
+                        <li><a href="#" onclick="redirectPatients()">Patients</a></li>
+                        <li><a href="#" onclick="redirectComordities()">Comorbidities</a></li>
+                        <li><a href="#" onclick="redirectDisabilities()">Disabilities</a></li>
+                        <li><a href="#" onclick="redirectVitals()">Vitals</a></li>
+                        <li><a href="comments.html">Comments</a></li>
+                        <li><a href="users.html">Users/Doctors</a></li>
+                        <li id="accountDropdown" class="dropdown" style="width: 40x;">
+                            <a  id="accountButton" onclick="toggleAccountOptions()" style="cursor: pointer;">Account <img src="male.jpg" alt="accountImg" id="accountImg"></a>
+                            <ul id="accountOptions" class="dropdown-content" style="text-align: center; width: 40x;">
+                                <li  style="text-align: center; padding-left: 30px;"><a style="font-size: 15px; color:aliceblue;  text-align: center; width: 100%;" href="#">Account</a></li>
+                                <li  style="text-align: center; padding-left: 30px;"><a style="font-size: 15px;  color:aliceblue;  text-align: center; width: 100%;" href="#" onclick="signOut()">Sign Out</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="homeDiv">
+                <h1>HOME</h1>  
+            </div>
+              
+        
+</body>
+</html>

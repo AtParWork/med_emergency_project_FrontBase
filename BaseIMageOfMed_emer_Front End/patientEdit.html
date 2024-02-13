@@ -1,0 +1,112 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="index.css">
+    <script src="script.js"></script>
+</head>
+<body>
+    <div id="requestBody"><h3>Request</h3> <div class="requestContent"><h4>Request Body</h4>
+        <pre>
+        {
+            "username": "string",
+            "password": "string",
+            "rememberMe": true
+          }
+          request URL: http://localhost:8080/api/authenticate
+        </pre>
+        </div></div>
+        <div id="responseBody"><h4>Response</h4><div class="requestContent"><h4>Response Body</h4>
+        <pre>
+            {
+                "id_token": "string"
+              }
+        </pre>
+        </div></div>
+        
+        <!-- Header -->
+            <div class="header">
+                <div class="logo">
+                    <a href="home.html" id="logo"><img src="logo1.png" alt="logo" id="logoImg"></a>
+                    <h2>Medical_PRO</h2>
+                </div>
+                <div class="navbar">
+                    <ul>
+                        <li><a href="home.html">Home</a>
+                        <li><a href="#" onclick="redirectPatients()">Patients</a></li>
+                        <li><a href="#" onclick="redirectComordities()">Comorbidities</a></li>
+                        <li><a href="#" onclick="redirectDisabilities()">Disabilities</a></li>
+                        <li><a href="#" onclick="redirectVitals()">Vitals</a></li>
+                        <li><a href="comments.html">Comments</a></li>
+                        <li><a href="users.html">Users/Doctors</a></li>
+                        <li><a id="account" >Account <img src="male.jpg" alt="accountImg" id="accountImg"></a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <h1>Edit the Patient Info</h1>
+
+            <div class="patientEditcontainer">
+                
+                <div class="patientInfoEdit">
+                    <h2>Patient Information</h2>
+                    <table id="patientEditTable">
+                        <tbody id="patientEditInfo">
+                        
+                        </tbody>
+                    </table>
+                </div>
+                <div class="patientInfoEdit2"></div>
+                <div class="patientInfoEdit3"></div>
+            </div>
+            <form id="patientEditForm" style="width: 0px; height: 0px; opacity: 0;"></form>
+            <!-- Script to fetch and display patient data -->
+            <script>
+                const username=localStorage.getItem('username');
+                const password=localStorage.getItem('password');
+                document.addEventListener("DOMContentLoaded", function() {
+                    const queryString = window.location.search;
+                    const urlParams = new URLSearchParams(queryString);
+                    const id = urlParams.get('id');
+                    const firstName = urlParams.get('firstName');
+                    const lastName = urlParams.get('lastName');
+                    const email = urlParams.get('email');
+                    const age = urlParams.get('age');
+                    const gender = urlParams.get('gender');
+                    const mobileNumber = urlParams.get('mobileNumber');
+        
+                    const patientInfoDiv = document.getElementById('patientEditInfo');
+                    const patientInfoHTML = `
+                        <tr>
+                        <td>ID :</td><td><input form="patientEditForm" type="number" name="id" id="id" readonly value="${id}"></td>
+                        </tr>
+                        <tr>
+                            <td>First Name :</td><td><input form="patientEditForm" type="text" name="firstName" id="firstName"  value="${firstName}"></td>
+                        </tr>
+                        <tr>
+                            <td>Last Name :</td><td><input form="patientEditForm" type="text" name="lastName" id="lastName"  value="${lastName}"></td>
+                        </tr>
+                        <tr>
+                            <td>Email :</td><td><input form="patientEditForm" type="email" name="email" id="email"  value="${email}"></td>
+                        </tr>
+                        <tr>
+                            <td>Age :</td><td><input form="patientEditForm" type="number" name="age" id="age"  value="${age}"></td>
+                        </tr>
+                        <tr>
+                            <td>Gender :</td><td><input form="patientEditForm" type="text" name="gender" id="gender"  value="${gender}"></td>
+                        </tr>
+                        <tr>
+                            <td>Mobile Number :</td><td><input  form="patientEditForm" type="number" name="mobileNumber" id="mobileNumber"  value="${mobileNumber}"></td>
+                        </tr>
+                        <tr>  
+                            <td><button  id="patientEditCancle" onclick="fetchData()" >Cancel</button></td>
+                            <td><button form="patientEditForm" type="submit" id="patientEditbutton">Submit</button></td>
+                        </tr>
+                    `;
+                    patientInfoDiv.innerHTML = patientInfoHTML;
+                });
+            </script>
+        
+</body>
+</html>

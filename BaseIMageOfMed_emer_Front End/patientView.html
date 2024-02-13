@@ -1,0 +1,572 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="index.css">
+    <script src="script.js"></script>
+   
+</head>
+<body>
+    
+    <div id="requestBody"><h3>Request</h3> <div class="requestContent"><h4>Request Body</h4>
+        <pre>
+        {
+            "username": "string",
+            "password": "string",
+            "rememberMe": true
+          }
+          request URL: http://localhost:8080/api/authenticate
+        </pre>
+        </div></div>
+        <div id="responseBody"><h4>Response</h4><div class="requestContent"><h4>Response Body</h4>
+        <pre>
+            {
+                "id_token": "string"
+              }
+        </pre>
+        </div></div>
+        
+        <!-- Header -->
+            <div class="header">
+                <div class="logo">
+                    <a href="home.html" id="logo"><img src="logo1.png" alt="logo" id="logoImg"></a>
+                    <h2>Medical_PRO</h2>
+                </div>
+                <div class="navbar">
+                    <ul>
+                        <li><a href="home.html">Home</a>
+                        <li><a href="#" onclick="redirectPatients()">Patients</a></li>
+                        <li><a href="#" onclick="redirectComordities()">Comorbidities</a></li>
+                        <li><a href="#" onclick="redirectDisabilities()">Disabilities</a></li>
+                        <li><a href="#" onclick="redirectVitals()">Vitals</a></li>
+                        <li><a href="comments.html">Comments</a></li>
+                        <li><a href="users.html">Users/Doctors</a></li>
+                        <li><a id="account" >Account <img src="male.jpg" alt="accountImg" id="accountImg"></a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Popup form -->
+            <div class="overlay" id="overlay">
+            <div class="addPatientDetailspopup" id="addPatientDetailspopup">
+            
+            </div>
+            </div>
+
+            <!-- Main content -->
+    <h1 style="margin-left: 40px; padding: 5px; margin: 5px;">Patient Information</h1>
+    <div class="patientViewcontainer">
+        <div id="patientViewPage">
+            <div id="patientInfo"></div>
+            <div id="patientViewInfo">
+                <div class="patientComorbidityDisability">
+                    <div id="patientComorbities">
+                        <div class="patientComorbitiesHead">
+                            <h3>Patient Comorbidities</h3>
+                            <button id="addPatientComorbidityButton" onclick="redirectToAddPatientComorbidities()">Add comorbidity</button>
+                        </div>
+                        <div class="patientDetailsBody">
+                            <table class="patientComorbiditiesTable">
+                                <thead>
+                                    <tr>
+                                        <th>Patient Comorbidity Id</th>
+                                        <th>Comorbidity name</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="patientComorbitiesInfo">
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                    </div>
+                    <div id="patientDisabilities">
+                        <div class="patientDisabilitiesHead">
+                            <h3>Patient Disabilities</h3>
+                            <button id="addPatientDisabilityButton" onclick="redirectToAddPatientDisabilties()">Add Disabilitiy</button>
+                        </div>
+                        <div class="patientDetailsBody">
+                            <table class="patientDisabilitiesTable">
+                                <thead>
+                                    <tr>
+                                        <th>Patient Disability Id</th>
+                                        <th>Disability name</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="patientDisabilitiesInfo">
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="patientVitals">
+                    <div id="patientVitals">
+                        <div class="patientVitalsHead">
+                            <h3>Patient Vitals</h3>
+                            <button id="addPatientVitalsButton" onclick="redirectToAddPatientVitals()">Add vital</button>
+                        </div>
+                        <div class="patientDetailsBody">
+                            <table class="patientVitalsTable">
+                                <thead>
+                                    <tr>
+                                        <th>Patient Vital Id</th>
+                                        <th>Pulse Rate</th>
+                                        <th>Blood Pressure</th>
+                                        <th>Respiration</th>
+                                        <th>SPO 2</th>
+                                        <th>Time of Measurement</th>
+                                        <th>Added by</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="patientVitalsInfo">
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="patientComments">
+                    <div id="patientComments">
+                        <div class="patientCommentsHead">
+                            <h3>Patient Comments</h3>
+                            <button id="addPatientCommentButton" onclick="redirectToAddPatientComment()">Add comment</button>
+                        </div>
+                        <div class="patientDetailsBody">
+                            <table class="patientCommentsTable">
+                                <thead>
+                                    <tr>
+                                        <th>Patient Comment Id</th>
+                                        <th>Comment</th>
+                                        <th>Added by</th>
+                                        <th>Added Date</th>   
+                                    </tr>
+                                </thead>
+                                <tbody id="patientCommentsInfo">
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+               
+            </div>
+        </div>   
+        
+    </div>
+
+     <!-- Script to fetch and display patient data -->
+     <script>
+
+             
+
+
+        // add new patient Comorbidity submit button
+            async function  addPatientComorbidityMethod(patientId,comorbiditiesDataBodyId) {
+            
+            
+            await addPatientComorbidity(patientId,comorbiditiesDataBodyId);
+            document.getElementById("overlay").style.display = "none";
+            document.getElementById("addPatientDetailspopup").style.display = "none";
+            
+            // Redirect to patient view
+            await redirectToPatientView(patientId);
+            
+
+            
+            }
+
+              // add new patient Disability submit button
+            async function  addPatientDisabilityMethod(patientId,DisabiltiesDataBodyId) {
+            
+            
+            await addPatientDisability(patientId,DisabiltiesDataBodyId);
+            document.getElementById("overlay").style.display = "none";
+            document.getElementById("addPatientDetailspopup").style.display = "none";
+            
+            // Redirect to patient view
+            await redirectToPatientView(patientId); 
+            }
+           
+              // add new patient Vitals submit button
+            async function   addPatientVitalsMethod(patientId,pulseRate,bloodPressure,respiration,spo2) {
+            
+            await addPatientVitals(patientId,pulseRate,bloodPressure,respiration,spo2);
+            document.getElementById("overlay").style.display = "none";
+            document.getElementById("addPatientDetailspopup").style.display = "none";
+            
+            // Redirect to patient view
+            await redirectToPatientView(patientId); 
+            }
+
+              // add new patient Comment submit button
+            async function   addPatientCommemtMethod(patientId,comment) {
+            
+            await addPatientComment(patientId,comment);
+            document.getElementById("overlay").style.display = "none";
+            document.getElementById("addPatientDetailspopup").style.display = "none";
+            
+            // Redirect to patient view
+            await redirectToPatientView(patientId); 
+            }
+
+            const username=localStorage.getItem('username');
+            const password =localStorage.getItem('password');
+            
+            // Function to close the patientComorbidity form
+            async function closeaddPatientDetailsInfoForm() {
+            document.getElementById("overlay").style.display = "none";
+            document.getElementById("addPatientDetailspopup").style.display = "none";
+            // redirectToPatientView(id);
+            }
+
+            
+            document.addEventListener("DOMContentLoaded", async function() {
+               
+        
+            const queryString = window.location.search;
+            const urlParams = new URLSearchParams(queryString);
+            const patientViewData = urlParams.get('patientViewData');
+            // console.log("Patient View Data:", patientViewData); 
+
+            const allpatientViewData = JSON.parse(patientViewData);
+            //getting patientData
+            var patientData = allpatientViewData.patientData;
+
+          
+            //getting patientComorbidityData
+            var patientComorbiditiesBody = allpatientViewData.patientComorbiditiesData;
+
+            //getting patientDisabilitiesData
+           
+            const patientDisabilitiesBody = await fetchPatientDisabilitiesById(patientData.id);
+
+             // //getting patient Vitals
+
+            const patientVitalsBody = await fetchPatientVitalsById(patientData.id);
+               
+            // var patientVitalsBody= allpatientViewData.patientVitalsData;
+           
+            // //getting patient Comments
+
+            const patientCommentsBody = await fetchPatientCommentsById(patientData.id);
+            // var patientCommentsBody= allpatientViewData.patientCommentsData;
+           
+            // //getting  Comrbidities
+            const comorbiditiesDataBody = await fetchAllComorbidities();
+            // console.log(comorbiditiesDataBody[1]["name"]);
+            // var comorbiditiesDataBody= allpatientViewData.comorbiditiesData;
+            
+
+            //getting  Disabilities
+            const disabilitiesDataBody = await fetchAllDisabilities();
+            // console.log(disabilitiesDataBody);
+            // var disabilitiesDataBody= allpatientViewData.disabilitiesData;
+            // console.log("Disability: "+disabilitiesDataBody);
+
+
+
+
+            var id = patientData.id;
+            var firstName = patientData.firstName;
+            var lastName = patientData.lastName;
+            var email = patientData.email;
+            var age = patientData.age;
+            var gender = patientData.gender;
+            var mobileNumber = patientData.mobileNumber;
+            console.log(firstName);
+
+
+            //browser history updating
+
+            // window.addEventListener('popstate', function(event) {
+            //      redirectToPatientView(id);
+
+            // });
+
+
+
+
+            const patientInfoDiv = document.getElementById('patientInfo');
+            const patientInfoHTML = `
+            <table style="border: 1px solid black">
+            <tbody >
+            <tr>
+                <td>Id:</td><td><input type="number" name="id" id="id" readonly value="${id}"></td>
+                <td>First Name:</td><td> <input type="text" name="firstName" id="firstName" readonly value="${firstName}"></td>
+                <td>Last Name:</td><td> <input type="text" name="lastName" id="lastName" readonly value="${lastName}"></td>
+                <td>Email:</td><td><input type="email" name="email" id="email" readonly value="${email}"></td>
+                <td>Age:</td><td><input type="number" name="age" id="age" readonly value="${age}"></td>
+                <td>Gender:</td><td><input type="text" name="gender" id="gender" readonly value="${gender}"></td>
+                <td>Mobile Number:</td><td><input type="number" name="mobileNumber" id="mobileNumber" readonly value="${mobileNumber}"></td>
+            </tr>
+            </tbody>
+            </table>
+
+            `;
+            patientInfoDiv.innerHTML = patientInfoHTML;
+            //setting up patientComoerbiditiesInfo
+            const patientComorbitiesInfoDiv = document.getElementById('patientComorbitiesInfo');
+            patientComorbiditiesBody.forEach(patientComorbidity => {
+            const patientComorbitiesInfoHTML = `
+                    <tr>
+                        <td>${patientComorbidity.id}</td><td>${patientComorbidity.comorbidity.name}</td>
+                    </tr>
+            `;
+            patientComorbitiesInfoDiv.innerHTML+=patientComorbitiesInfoHTML;
+            });
+
+            //setting up patientDisabilitiesInfo
+            const patientDisabilitiesInfoDiv = document.getElementById('patientDisabilitiesInfo');
+            patientDisabilitiesBody.forEach(patientDisability =>{
+            const patientDisabilitiesInfoHTML =`
+                    <tr>
+                        <td>${patientDisability.id}</td><td>${patientDisability.disability.name}</td>
+                    </tr>
+            `;
+            patientDisabilitiesInfoDiv.innerHTML+=patientDisabilitiesInfoHTML;
+            });
+
+            //setting up patientVitalsInfo
+            const patientVitasInfoDiv = document.getElementById('patientVitalsInfo');
+            patientVitalsBody.forEach(patientVital =>{
+            const patientVitalsInfoHTML =`
+                    <tr>
+                        <td>${patientVital.id}</td>
+                        <td>${patientVital.pulseRate}</td>
+                    
+                        <td>${patientVital.bloodPressure}</td>
+                    
+                        <td>${patientVital.respiration}</td>
+
+                        <td>${patientVital.spo2}</td>
+                    
+                        <td>${patientVital.createdDate}</td>
+                    
+                        <td>${patientVital.createdBy}</td>
+                    </tr>
+                    
+            `;
+            patientVitasInfoDiv.innerHTML+=patientVitalsInfoHTML;
+            });
+
+            // //setting up patientCommentsInfo
+            const patientCommentsInfoDiv = document.getElementById('patientCommentsInfo');
+            patientCommentsBody.forEach(patientComment =>{
+            const patientCommentsInfoHTML =`
+                    <tr>
+                        <td>${patientComment.id}</td>
+                        <td>${patientComment.comment}</td>
+                    
+                        <td>${patientComment.createdBy}</td>
+                    
+                        <td>${patientComment.createdDate}</td>
+
+                
+                    </tr>
+            `;
+            patientCommentsInfoDiv.innerHTML+=patientCommentsInfoHTML;
+            });
+        
+                function generateOptionsComorbidity(DataBody) {
+                        let optionsHTML = '';
+                        for (let i = 0; i < DataBody.length; i++) {
+                            optionsHTML += `<option value="${DataBody[i]["id"]}">${DataBody[i]["name"]}</option>`;
+                        }
+                        return optionsHTML;
+                        }
+                function generateOptionsDisability(DataBody) {
+                let optionsHTML = '';
+                for (let i = 0; i < DataBody.length; i++) {
+                    optionsHTML += `<option value="${DataBody[i]["id"]}">${DataBody[i]["name"]}</option>`;
+                }
+                return optionsHTML;
+                }
+                
+
+                // // Function to open the patientComorbidity form
+                 function redirectToAddPatientComorbidities() {
+                    
+                    const addPatientDetailspopupDiv = document.getElementById('addPatientDetailspopup');
+                    addPatientDetailspopupDiv.innerHTML = '';
+                    document.getElementById("overlay").style.display = "block";
+                    addPatientDetailspopupDiv.style.display = "table-column";
+
+
+                const addPatientDetailspopupInfoHTMl = `
+                <h2>Add Comorbidity</h2>
+                <div class="entitySelectAndChoose">
+                <form id="addPatientComorbidityForm">
+                    <table id="addPatientComorbidityFormTable">
+                        <tr>
+                            <td><h4>Comorbidity: </h4></td>
+                            <td>
+                            
+                                <select name='patientComorbidity'  id="newPatientComorbiditySelect">
+                                    <div class="selectOptionsListControl">
+                                    ${generateOptionsComorbidity(comorbiditiesDataBody)}
+                                    </div>
+                                </select>
+                            
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+                <table id="addCancleButtons">
+                <tr>
+                    <td>
+                        <button style="float: right;" id="addPatientDetailsCancle" onclick="closeaddPatientDetailsInfoForm()">Cancel</button>
+                    </td>
+                    <td>
+                        <a href="#" onclick="addPatientComorbidityMethod(${id},document.getElementById('newPatientComorbiditySelect').value)">
+                            <button style="float: right;" id="addPatientComorbidityButtonConfirm">Add</button>
+                        </a>
+                    </td>
+                </tr>
+                </table>
+                </div>`;
+
+                addPatientDetailspopupDiv.innerHTML += addPatientDetailspopupInfoHTMl;
+                }
+
+                // add patient Disability div
+                function redirectToAddPatientDisabilties(){
+                    const addPatientDetailspopupDiv = document.getElementById('addPatientDetailspopup');
+                    addPatientDetailspopupDiv.innerHTML = '';
+                document.getElementById("overlay").style.display = "block";
+                addPatientDetailspopupDiv.style.display = "table-column";
+
+                const addPatientDetailspopupInfoHTMl = `
+                <h2>Add Disability</h2>
+                <div class="entitySelectAndChoose">
+                <form id="addPatientDisabilityForm">
+                    <table id="addPatientDisabilityFormTable">
+                        <tr>
+                            <td><h4>Disability: </h4></td>
+                            <td>
+                            
+                                <select name='patientDisabilty'  id="newPatientDisabilitySelect">
+                                    <div class="selectOptionsListControl">
+                                    ${generateOptionsDisability(disabilitiesDataBody)}
+                                    </div>
+                                </select>
+                            
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+                <table id="addCancleButtons">
+                <tr>
+                    <td>
+                        <button style="float: right;" id="addPatientDetailsCancle" onclick="closeaddPatientDetailsInfoForm()">Cancel</button>
+                    </td>
+                    <td>
+                        <a href="#" onclick="addPatientDisabilityMethod(${id},document.getElementById('newPatientDisabiltySelect').value)">
+                            <button style="float: right;" id="addPatientDisabiltyButtonConfirm">Add</button>
+                        </a>
+                    </td>
+                </tr>
+                </table>
+                </div>`;
+
+                addPatientDetailspopupDiv.innerHTML += addPatientDetailspopupInfoHTMl;
+
+                }
+
+                // add patient vitals div
+                function redirectToAddPatientVitals(){
+                    const addPatientDetailspopupDiv = document.getElementById('addPatientDetailspopup');
+                    addPatientDetailspopupDiv.innerHTML = '';
+                document.getElementById("overlay").style.display = "block";
+                addPatientDetailspopupDiv.style.display = "table-column";
+                const addPatientDetailspopupInfoHTMl = `
+                <h2>Add Vitals</h2>
+                <div class="entitySelectAndChoose">
+                <form id="addPatientVitalsForm">
+                    <table id="addPatientVitalsFormTable">
+                        <tr>
+                            <td>Pulse Rate: </td>
+                            <td><input type="text" style="width:350px" name="pulseRate" id="pulseRate" value="" placeholder="Enter the Pulse Rate"></td>
+                        </tr>
+                        <tr>
+                            <td>Blood Pressure: </td>
+                            <td><input type="text" name="bloodPressure" id="bloodPressure" value=""  placeholder="Enter the Blood Pressure"></td>
+                        </tr>
+                        <tr>
+                            <td>Respiration: </td>
+                            <td><input type="text" name="respiration" id="respiration" value=""  placeholder="Enter the Respiration Rate"></td>
+                        </tr>
+                        <tr>
+                            <td>SPO 2: </td>
+                            <td><input type="text" name="spo2" id="spo2" value=""  placeholder="Enter the SPO 2"></td>
+                        </tr>
+                    </table>
+                </form>
+                <table id="addCancleButtons">
+                <tr>
+                    <td>
+                        <button style="float: right;" id="addPatientDetailsCancle" onclick="closeaddPatientDetailsInfoForm()">Cancel</button>
+                    </td>
+                    <td>
+                        <a href="#" onclick="addPatientVitalsMethod(
+                            ${id},
+                            document.getElementById('pulseRate').value,
+                            document.getElementById('bloodPressure').value,
+                            document.getElementById('respiration').value,
+                            document.getElementById('spo2').value
+                            )">
+                            <button style="float: right;" id="addPatientVitalsButtonConfirm">Add</button>
+                        </a>
+                    </td>
+                </tr>
+                </table>
+                </div>`;
+
+                addPatientDetailspopupDiv.innerHTML += addPatientDetailspopupInfoHTMl;
+
+                }
+
+                // add patient Comments div
+                function redirectToAddPatientComment(){
+                    const addPatientDetailspopupDiv = document.getElementById('addPatientDetailspopup');
+                    addPatientDetailspopupDiv.innerHTML = '';
+                document.getElementById("overlay").style.display = "block";
+                addPatientDetailspopupDiv.style.display = "table-column";
+                const addPatientDetailspopupInfoHTMl = `
+                <h2>Add Coments</h2>
+                <div class="entitySelectAndChoose">
+                <form id="addPatientCommentForm">
+                    <table id="addPatientCommentFormTable">
+                        <tr>
+                            <td><h4>Comment: </h4></td>
+                            <td><input type="text" style="width:400px" name="comment" id="comment" value="" placeholder="Enter the Comment"></td>
+                        </tr>
+                    </table>
+                </form>
+                <table id="addCancleButtons">
+                <tr>
+                    <td>
+                        <button style="float: right;" id="addPatientDetailsCancle" onclick="closeaddPatientDetailsInfoForm()">Cancel</button>
+                    </td>
+                    <td>
+                        <a href="#" onclick="addPatientCommemtMethod(${id},document.getElementById('comment').value)">
+                            <button style="float: right;" id="addPatientCommentButtonConfirm">Add</button>
+                        </a>
+                    </td>
+                </tr>
+                </table>
+                </div>`;
+
+                addPatientDetailspopupDiv.innerHTML += addPatientDetailspopupInfoHTMl;
+
+                }
+                window.redirectToAddPatientComorbidities = redirectToAddPatientComorbidities;
+                window.redirectToAddPatientDisabilties = redirectToAddPatientDisabilties;
+                window.redirectToAddPatientVitals = redirectToAddPatientVitals;
+                window.redirectToAddPatientComment = redirectToAddPatientComment;
+            });
+</script>   
+
+</body>
+</html>

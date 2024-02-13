@@ -1,0 +1,326 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comorbidities</title>
+    <link rel="stylesheet" href="index.css">
+    <script src="script.js"></script>
+</head>
+<body>
+   
+        <!-- Header -->
+            <div class="header">
+                <div class="logo">
+                    <a href="home.html" id="logo"><img src="logo1.png" alt="logo" id="logoImg"></a>
+                    <h2>Medical_PRO</h2>
+                </div>
+                <div class="navbar">
+                    <ul>
+                        <li><a href="home.html">Home</a>
+                        <li><a href="#" onclick="redirectPatients()">Patients</a></li>
+                        <li><a href="#" onclick="redirectComordities()">Comorbidities</a></li>
+                        <li><a href="#" onclick="redirectDisabilities()">Disabilities</a></li>
+                        <li><a href="#" onclick="redirectVitals()">Vitals</a></li>
+                        <li><a href="comments.html">Comments</a></li>
+                        <li><a href="users.html">Users/Doctors</a></li>
+                        <li><a id="account" >Account <img src="male.jpg" alt="accountImg" id="accountImg"></a></li>
+                    </ul>
+                </div>
+            </div>
+             <!-- Popup form -->
+             <div class="overlay" id="overlay" >
+                <div class="addPatientDetailspopup" id="addPatientDetailspopup">
+                
+                </div>
+            </div>
+
+                <!-- Page -->
+            <div class="page" style="display: flex; align-items: center;justify-content: space-evenly">
+                <div class="filterSearch">
+                    <div id="addcomorbidity">
+                        <a  id="addNewComorbidity" ><button id="addComorbidityButton" onclick="redirectToAddComorbidity()" style="cursor: pointer;">Add comorbidity</button></a>
+                    </div>
+                    <div id="filterSearch">
+                        <div class="search" >
+                            <input type="text" name="searchInput" id="searchInput" placeholder="enter any details">
+                            <button id="searchbar">search</button>
+                        </div>
+                        <div class="filter">
+                           
+                        </div>
+                    </div>
+                </div>
+                <div class="infoTableDiv">
+                <table class="tableDetails" style="width: fit-content; height: inherit;border: 2px solid; border-radius: 10px; background-color:rgb(99, 168, 163) ;">
+                    <thead>
+                    <tr>
+                        <th >ID</th>
+                        <th >Comorbidity Name</th>
+                        
+                        <th colspan="3">info</th>
+                        
+                    
+                    </tr>
+                </thead>
+                    <tbody id="comorbidityList">
+                         <!-- <td><input readonly form="patientView" type="text" name="status" id="status" value="Serious"/></td> -->
+                        
+                    </tbody>
+                </table>
+             </div>
+                <script>
+                    
+                    // close popup page
+                    async function closeaddPatientDetailsInfoForm() {
+                    document.getElementById("overlay").style.display = "none";
+                    document.getElementById("addPatientDetailspopup").style.display = "none";
+                   
+                    }
+
+                    // add new comorbidity submit button
+                    async function  addComorbidityMethod(newComorbidityName) {
+            
+                        
+                        await addComorbidity(newComorbidityName);
+                        document.getElementById("overlay").style.display = "none";
+                        document.getElementById("addPatientDetailspopup").style.display = "none";
+                        
+                        // Redirect to patient view
+                        redirectComordities();
+    
+                        }
+
+                        // edit comorbidity submit button
+                    async function  editComorbidityMethod(comorbidityId,updatedComorbidityName) {
+            
+                        
+                        await editComorbidity(comorbidityId,updatedComorbidityName);
+                        document.getElementById("overlay").style.display = "none";
+                        document.getElementById("addPatientDetailspopup").style.display = "none";
+                        
+                        // Redirect to patient view
+                        redirectComordities();
+
+                        }
+
+                    const username=localStorage.getItem('username');
+                    const password=localStorage.getItem('password');
+                   
+                    document.addEventListener('DOMContentLoaded', () => {
+                        const queryString = window.location.search;
+                        const urlParams = new URLSearchParams(queryString);
+                        const userDataString = urlParams.get('data');
+                        if (userDataString) {
+                            const comorbidities = JSON.parse(decodeURIComponent(userDataString));
+                            console.log("comorbidities:"+comorbidities);
+                            displayUserData(comorbidities);
+                        }
+                            
+                           
+                    });
+                 
+                   
+                  
+            
+                    function displayUserData(comorbiditiesData) {
+                      
+                        const comorbidityListContainer = document.getElementById('comorbidityList');
+                       
+                        
+                        comorbiditiesData.forEach(comorbidity => {
+              
+                const comorbidityInfo = `
+                    <tr>
+                        <td><input readonly form="patientView" type="number" name="id" id="id" value="${comorbidity.id}"/>
+                        <input readonly hidden class="hiddenInput" form="patientEdit" type="number" name="id" id="id" value="${comorbidity.id}"/>
+                        <input readonly hidden class="hiddenInput" form="patientDelete" type="number" name="id" id="id" value="${comorbidity.id}"/>
+                        </td>
+        
+                        <td>
+                            <input readonly form="patientView" type="text" name="name" id="name" value="${comorbidity.name}"/>
+                        <input readonly hidden class="hiddenInput" form="patientEdit" type="text" name="name" id="name" value="${comorbidity.name}"/>
+                        <input readonly hidden class="hiddenInput" form="patientDelete" type="text" name="name" id="name" value="${comorbidity.name}"/>
+                        </td>
+        
+                       
+                     
+                        <td class="comorbidityComorbidityEdit">
+
+                        <button id="comorbidityComorbidityEdit" onclick="redirectToEditComorbidity('${comorbidity.id}','${comorbidity.name}')">
+                            Edit
+                        </button></td>
+        
+                        <td class="comorbidityComorbidityView">
+                            <button id="comorbidityComorbidityView" onclick="redirectToViewComorbidity('${comorbidity.id}','${comorbidity.name}','${comorbidity.createdBy}','${comorbidity.createdDate}','${comorbidity.lastModifiedBy}','${comorbidity.lastModifiedDate}')">View</button>
+                        </td>
+                        <td class="comorbidityComorbidityDelete"><button id="comorbidityComorbidityDelete" >Delete</button></td>
+                        
+                    </tr>
+                    
+                `;
+                comorbidityListContainer.innerHTML += comorbidityInfo;
+
+                function redirectToAddComorbidity() {
+                    
+                    const addPatientDetailspopupDiv = document.getElementById('addPatientDetailspopup');
+                    addPatientDetailspopupDiv.innerHTML = '';
+                    document.getElementById("overlay").style.display = "block";
+                    addPatientDetailspopupDiv.style.display = "table-column";
+
+
+                const addPatientDetailspopupInfoHTMl = `
+                <h2>Add Comorbidity</h2>
+                <div class="entitySelectAndChoose">
+                <form id="addComorbidityForm">
+                    <table id="addComorbidityFormTable">
+                        <tr>
+                            <td><h4>Comorbidity: </h4></td>
+                            <td>
+                                <input type="text" style="width: 400px;" name="newComorbidity" id="newComorbidity" placeholder="enter new Comorbidity">
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+                <table id="addCancleButtons">
+                <tr>
+                    <td>
+                        <button style="float: right;" id="addPatientDetailsCancle" onclick="closeaddPatientDetailsInfoForm()">Cancel</button>
+                    </td>
+                    <td>
+                        <a href="#" onclick="addComorbidityMethod(document.getElementById('newComorbidity').value)">
+                            <button style="float: right;" id="addComorbidityButtonConfirm">Add</button>
+                        </a>
+                    </td>
+                </tr>
+                </table>
+                </div>`;
+
+                addPatientDetailspopupDiv.innerHTML += addPatientDetailspopupInfoHTMl;
+                }
+
+                // onclick comorbidity Edit button
+                function redirectToEditComorbidity(id, name) {
+                    
+                    const addPatientDetailspopupDiv = document.getElementById('addPatientDetailspopup');
+                    addPatientDetailspopupDiv.innerHTML = '';
+                    document.getElementById("overlay").style.display = "block";
+                    addPatientDetailspopupDiv.style.display = "table-column";
+
+
+                const addPatientDetailspopupInfoHTMl = `
+                <h2>Edit Comorbidity</h2>
+                <div class="entitySelectAndChoose">
+                <form id="addComorbidityForm">
+                    <table id="addComorbidityFormTable">
+                        <tr>
+                            <td>Id :</td>
+                            <td>
+                                <input readonly type="text" style="width: 400px;" name="editComorbidityId" id="editComorbidityId" value="${id}">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Name :</td>
+                            <td>
+                                <input type="text" style="width: 400px;" name="editComorbidity" id="editComorbidity" value="${name}">
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+                <table id="addCancleButtons">
+                <tr>
+                    <td>
+                        <button style="float: right;" id="addPatientDetailsCancle" onclick="closeaddPatientDetailsInfoForm()">Cancel</button>
+                    </td>
+                    <td>
+                        <a href="#" onclick="editComorbidityMethod(${id},document.getElementById('editComorbidity').value)">
+                            <button style="float: right;" id="editComorbidityButtonConfirm">Submit</button>
+                        </a>
+                    </td>
+                </tr>
+                </table>
+                </div>`;
+
+                addPatientDetailspopupDiv.innerHTML += addPatientDetailspopupInfoHTMl;
+                }
+
+                // onclick comorbidity View button
+                function redirectToViewComorbidity(id, name, createdBy, createdDate, lastModifiedBy,lastModifiedDate) {
+                    
+                    const addPatientDetailspopupDiv = document.getElementById('addPatientDetailspopup');
+                    addPatientDetailspopupDiv.innerHTML = '';
+                    document.getElementById("overlay").style.display = "block";
+                    addPatientDetailspopupDiv.style.display = "table-column";
+
+
+                const addPatientDetailspopupInfoHTMl = `
+                <h2>View Comorbidity</h2>
+                <div class="entitySelectAndChoose">
+                <form id="addComorbidityForm">
+                    <table id="addComorbidityFormTable">
+                        <tr>
+                            <td>Id :</td>
+                            <td>
+                                <input readonly type="text" style="width: 400px;" name="newComorbidity" id="newComorbidity" value="${id}">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Name :</td>
+                            <td>
+                                <input readonly type="text" style="width: 400px;" name="newComorbidity" id="newComorbidity" value="${name}">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Created By :</td>
+                            <td>
+                                <input readonly type="text" style="width: 400px;" name="newComorbidity" id="newComorbidity" value="${createdBy}">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Created Date :</td>
+                            <td>
+                                <input readonly type="text" style="width: 400px;" name="newComorbidity" id="newComorbidity" value="${createdDate}">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Last Modified By :</td>
+                            <td>
+                                <input readonly type="text" style="width: 400px;" name="newComorbidity" id="newComorbidity" value="${lastModifiedBy}">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Last Modofied Date :</td>
+                            <td>
+                                <input readonly type="text" style="width: 400px;" name="newComorbidity" id="newComorbidity" value="${lastModifiedDate}">
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+                <table id="addCancleButtons">
+                <tr>
+                    <td>
+                        <button style="float: right;" id="addPatientDetailsCancle" onclick="closeaddPatientDetailsInfoForm()">Cancel</button>
+                    </td>
+                    <td>
+                       
+                    </td>
+                </tr>
+                </table>
+                </div>`;
+
+                addPatientDetailspopupDiv.innerHTML += addPatientDetailspopupInfoHTMl;
+                }
+
+
+
+                window.redirectToAddComorbidity = redirectToAddComorbidity;
+                window.redirectToEditComorbidity = redirectToEditComorbidity;
+                window.redirectToViewComorbidity = redirectToViewComorbidity;
+            });
+           
+        }
+                </script>
+               
+                
+            </div>
+</body>
+</html>

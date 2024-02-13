@@ -1,0 +1,86 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=\, initial-scale=1.0">
+    <link rel="stylesheet" href="index.css">
+    
+    <title>Register</title>
+</head>
+<body id="body">
+   
+    <div class="logo">
+            <a href="home.html" id="logo"><img src="logo1.png" alt="logo" id="logoImg"></a>
+            <h2>Medical_PRO</h2>
+    </div>
+    <div id="requestBody"><h3>Request</h3> <div class="requestContent"><h4>Request Body</h4>
+        <pre style="font-weight: bold;">
+            {
+                "id": 0,
+                * "login": "string",
+                "firstName": "string",
+                "lastName": "string",
+                * "email": "string",
+                "imageUrl": "string",
+                "activated": true,
+                "langKey": "string",
+                "createdBy": "string",
+                "createdDate": "2024-02-07T00:37:12.205Z",
+                "lastModifiedBy": "string",
+                "lastModifiedDate": "2024-02-07T00:37:12.205Z",
+                "authorities": [
+                  "string"
+                ],
+                * "password": "string"
+              }
+          request URL: http://localhost:8080/api/register
+        </pre>
+    </div></div>
+    <div id="responseBody"><h4>Response</h4><div class="responseContent"><h4>Response Body</h4>
+        <pre>
+            code :201
+            created
+            no response:
+        </pre>
+    </div></div>
+    <div class="indexPage">
+       
+    <div class="register">
+        <h1>Register</h1>
+        <form action="home.html" >
+            <table id="table" style="margin: 20px;">
+                <tr>
+                    <td>Username :</td>
+                    <td><input type="text" name="name" id="" placeholder="Enter the Name"></td>
+                </tr>
+                <tr>
+                    <td>Email :</td>
+                    <td><input type="email" name="email" id="" placeholder="Enter the Email"></td>
+                </tr>
+                <tr>
+                    <td>New Password :</td>
+                    <td><input type="password" name="" id="" placeholder="Enter the age"></td>
+                </tr>
+                <tr>
+                    <td>New Password confirmation :</td>
+                    <td><input type="password" name="mobile" id="" placeholder="Enter the Mobile"></td>
+                </tr>
+                
+            </table>
+            <div id="requestresponse">
+                <button type="submit" id="submit">Register</button>
+                <label for="request">
+                <input type="button" id="request" value="req" name="request"/>
+                </label>
+                
+                 <label for="response">
+                 <input type="button" id="response"  value="res" name="response"/>
+                </label>
+                 
+                </div>
+            <p>If you have an account, Please <a id="registerLogin" href="login.html">Login</a></p>
+        </form>       
+        </div>
+    </div>  
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,77 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="index.css">
+   
+    <title>Login</title>
+    <script src="script.js"></script>
+</head>
+<body id="body">
+    
+<!-- header -->
+    <div class="header">
+        <div class="logo">
+                <a href="home.html" id="logo"><img src="logo1.png" alt="logo" id="logoImg"></a>
+                <h2>Medical_PRO</h2>
+        </div>
+    
+        </div>
+        <!-- Request/Response -->
+    <div id="requestBody"><h3>Request</h3> 
+        <div class="requestContent"><h4>Request Body</h4>
+        <pre style="font-weight: bold;">
+        {
+            "username": "string",
+            "password": "string",
+            "rememberMe": true
+          }
+          request URL: http://localhost:8080/api/authenticate
+        </pre>
+    </div></div>
+    <div id="responseBody"><h4>Response</h4>
+        <div class="responseContent"><h4>Response Body</h4>
+        <pre>
+            {
+                "id_token": "string"
+              }
+        </pre>
+    </div></div>
+    <!-- IndexPage -->
+    <div class="indexPage">
+    <div class="login">
+        <h1>Login</h1>
+        <form id="loginForm">
+            <table id="table" style="margin: 20px;">
+                <tr>
+                    <td>email/username :</td>
+                    <td><input type="text" form="loginForm" name="email" id="username" placeholder="Enter the Email/username" value="admin"></td>
+                </tr>
+            
+                <tr>
+                    <td>password :</td>
+                    <td><input type="password" form="loginForm" name="password" id="password" placeholder="Enter the password" value="admin"></td>
+                </tr>
+            </table>
+            <div id="requestresponse">
+                <a href="home.html"><button form="loginForm" type="submit" id="submit">Login</button></a>        
+                <!-- <label for="request">
+                <input type="button" id="request" value="req" name="request"/>
+                </label>
+                
+                 <label for="response">
+                 <input type="button" id="response"  value="res" name="response"/>
+                </label>
+                  -->
+                </div>
+            <p>If you are a new User, Please <a id="registerLogin" href="register.html">Register</a></p>
+        </form>
+        
+        </div>
+        <script>
+            localStorage.setItem('hmoe','home');
+        </script>
+    </div>
+   
+</body>
+</html>

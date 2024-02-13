@@ -1,0 +1,460 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vitals</title>
+    <link rel="stylesheet" href="index.css">
+    <script src="script.js"></script>
+</head>
+<body>
+    <div id="requestBody"><h3>Request</h3> <div class="requestContent"><h4>Request Body</h4>
+        <pre>
+        {
+            "username": "string",
+            "password": "string",
+            "rememberMe": true
+          }
+          request URL: http://localhost:8080/api/authenticate
+        </pre>
+        </div></div>
+        <div id="responseBody"><h4>Response</h4><div class="requestContent"><h4>Response Body</h4>
+        <pre>
+            {
+                "id_token": "string"
+              }
+        </pre>
+        </div></div>
+        
+        <!-- Header -->
+            <div class="header">
+                <div class="logo">
+                    <a href="home.html" id="logo"><img src="logo1.png" alt="logo" id="logoImg"></a>
+                    <h2>Medical_PRO</h2>
+                </div>
+                <div class="navbar">
+                    <ul>
+                        <li><a href="home.html">Home</a>
+                        <li><a href="#" onclick="redirectPatients()">Patients</a></li>
+                        <li><a href="#" onclick="redirectComordities()">Comorbidities</a></li>
+                        <li><a href="#" onclick="redirectDisabilities()">Disabilities</a></li>
+                        <li><a href="#" onclick="redirectVitals()">Vitals</a></li>
+                        <li><a href="comments.html">Comments</a></li>
+                        <li><a href="users.html">Users/Doctors</a></li>
+                        <li><a id="account" >Account <img src="male.jpg" alt="accountImg" id="accountImg"></a></li>
+                    </ul>
+                </div>
+            </div>
+
+              <!-- Popup form -->
+              <div class="overlay" id="overlay" >
+                <div class="addPatientDetailspopup" id="addPatientDetailspopup">
+                
+                </div>
+            </div>
+
+                <!-- Page -->
+            <div class="page" style="display: flex; align-items: center;justify-content: space-evenly">
+                <div class="filterSearch">
+                    <div id="addVitals">
+                        <a  id="addNewVitals" ><button id="addVitalsButton" onclick="redirectToAddVitals()" style="cursor: pointer;">Add Vitals</button></a>
+                    </div>
+                    <div id="filterSearch">
+                        <div class="search" >
+                            <input type="text" name="searchInput" id="searchInput" placeholder="enter any details">
+                            <button id="searchbar">search</button>
+                        </div>
+                        <div class="filter">
+                           
+                        </div>
+                    </div>
+                </div>
+                <div class="infoTableDiv">
+                <table class="tableDetails">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Pulse Rate</th>
+                        <th>Blood pressure</th>
+                        <th>Respiration</th>
+                        <th>SPO 2</th>
+                        <th>Time Of Measurement</th>
+                        <th>Patient</th>
+                        <th>Added By</th>
+                        <th colspan="3">info</th>
+                    </tr>
+                </thead>
+                   
+                    <tbody id="vitalsList">
+                         <!-- <td><input readonly form="patientView" type="text" name="status" id="status" value="Serious"/></td> -->
+                        
+                    </tbody>
+                  
+                </table>
+             </div>
+                <script>
+                    
+                    // close popup page
+                    async function closeaddPatientDetailsInfoForm() {
+                    document.getElementById("overlay").style.display = "none";
+                    document.getElementById("addPatientDetailspopup").style.display = "none";
+                   
+                    }
+
+                    // add new comorbidity submit button
+                    async function  addVitalsMethod(pulseRate,bloodPressure,respiration,spo2,patientId) {
+            
+                        
+                        await addiVtals(pulseRate,bloodPressure,respiration,spo2,patientId);
+                        document.getElementById("overlay").style.display = "none";
+                        document.getElementById("addPatientDetailspopup").style.display = "none";
+                        
+                        // Redirect to patient view
+                        redirectVitals();
+    
+                        }
+
+                        // edit comorbidity submit button
+                    async function  editVitalsMethod(id,pulseRate,bloodPressure,respiration,spo2) {
+            
+                        
+                        await editVitals(id,pulseRate,bloodPressure,respiration,spo2);
+                        document.getElementById("overlay").style.display = "none";
+                        document.getElementById("addPatientDetailspopup").style.display = "none";
+                        
+                        // Redirect to patient view
+                        redirectVitals();
+
+                        }
+
+                    const username=localStorage.getItem('username');
+                    const password=localStorage.getItem('password');
+                   
+                    document.addEventListener('DOMContentLoaded', async function() {
+                        const queryString = window.location.search;
+                        const urlParams = new URLSearchParams(queryString);
+                        const userDataString = urlParams.get('data');
+                        const vitals = JSON.parse(decodeURIComponent(userDataString));
+                     
+                        const patients = await fetchPatients();
+                       
+                        displayUserData(vitals,patients);
+                       
+                            
+                           
+                    });
+                 
+            
+                    function displayUserData(vitalsData,patients) {
+                      
+                        const vitalsListContainer = document.getElementById('vitalsList');
+                       
+                        
+                        vitalsData.forEach(vitals => {
+              
+                const vitalsInfo = `
+                    <tr>
+                        <td><input readonly type="number" name="id" id="id" value="${vitals.id}"/>
+                        </td>
+                    
+                        <td>
+                            <input readonly type="text" name="pulseRate" id="pulseRate" value="${vitals.pulseRate}"/>
+                        </td>
+                        
+                        <td>
+                            <input readonly type="text" name="bloodPressure" id="bloodPressure" value="${vitals.bloodPressure}"/>
+                        </td>
+
+                        <td>
+                            <input readonly type="text" name="respiration" id="respiration" value="${vitals.respiration}"/>
+                        </td>
+
+                        <td>
+                            <input readonly type="text" name="spo2" id="spo2" value="${vitals.spo2}"/>
+                        </td>
+
+                        <td>
+                            <input readonly type="text" name="timeOfMeasurement" id="timeOfMeasurement" value="${vitals.timeOfMeasurement}"/>
+                        </td>
+
+                        <td>
+                            <input readonly type="text" name="patient" id="patient" value="${vitals.patient.email}"/>
+                        </td>
+
+                        <td>
+                            <input readonly  type="text" name="createdBy" id="createdBy" value="${vitals.createdBy}"/>
+                        </td>
+        
+                        <td class="vitalsVitalsEdit">
+
+                        <button id="vitalsVitalsEdit" onclick="redirectToEditVitals('${vitals.id}','${vitals.bloodPressure}','${vitals.respiration}','${vitals.spo2}','${vitals.timeOfMeasurement}','${vitals.patient.email}','${vitals.createdBy}')">
+                            Edit
+                        </button></td>
+        
+                        <td class="vitalsVitalsView">
+                            <button id="vitalsVitalsView" onclick="redirectToViewVitals('${vitals.id}','${vitals.bloodPressure}','${vitals.respiration}','${vitals.spo2}','${vitals.timeOfMeasurement}','${vitals.patient.email}','${vitals.createdBy}')">View</button>
+                        </td>
+                        <td class="vitalsVitalsDelete"><button id="vitalsVitalsDelete" >Delete</button></td>
+                        
+                    </tr>
+                    
+                `;
+                vitalsListContainer.innerHTML += vitalsInfo;
+
+               
+                function generateOptionsPatients(patientsData) {
+                        let optionsHTML = '';
+                        for (let i = 0; i < patientsData.length; i++) {
+                            optionsHTML += `<option value="${patientsData[i].id}">${patientsData[i].email}</option>`;
+                        }
+                        return optionsHTML;
+                        }
+                    
+
+                function redirectToAddVitals() {
+                    
+                    const addPatientDetailspopupDiv = document.getElementById('addPatientDetailspopup');
+                    addPatientDetailspopupDiv.innerHTML = '';
+                    document.getElementById("overlay").style.display = "block";
+                    addPatientDetailspopupDiv.style.display = "table-column";
+
+
+                const addPatientDetailspopupInfoHTMl = `
+                <h2>Add Vitals</h2>
+                <div class="entitySelectAndChoose">
+                <form id="addVitalsForm">
+                    <table id="addVitalsFormTable">
+                    <tr>
+                        <td>Pulse Rate :</td>
+                        <td>
+                            <input  type="text" name="pulseRate" id="pulseRate" placeholder="Enter the Pulse Rate"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Blood pressure :</td>
+                        <td>
+                            <input  type="text" name="bloodPressure" id="bloodPressure" placeholder="Enter the Blood Pressure"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Respiration :</td>
+                        <td>
+                            <input type="text" name="respiration" id="respiration" placeholder="Enter the Respiration"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>SPO 2 :</td>
+                        <td>
+                            <input type="text" name="spo2" id="spo2" placeholder="Enter the SPO 2"/>
+                        </td>
+                    </tr>
+                    <tr>
+                       <td>Patient :</td>
+                       <td>
+                            
+                            <select name='patients'  id="newPatientSelect">
+                                <option disabled selected>Choose Patient</option>
+                                <div class="selectOptionsListControl">         
+                                    ${generateOptionsPatients(patients)}
+                                </div>
+                            </select>
+                        
+                        </td>
+                    </tr>
+                    
+                    </table>
+                </form>
+                <table id="addCancleButtons">
+                <tr>
+
+                    <td>
+                        <button style="float: right;" id="addPatientDetailsCancle" onclick="closeaddPatientDetailsInfoForm()">Cancel</button>
+                    </td>
+                    <td>
+                        <a href="#" onclick="addVitalsMethod(document.getElementById('pulseRate').value,document.getElementById('bloodPressure').value,
+                                                            document.getElementById('respiration').value,document.getElementById('spo2').value,
+                                                            document.getElementById('newPatientSelect').value)">
+                            <button style="float: right;" id="addVitalsButtonConfirm">Add</button>
+                        </a>
+                    </td>
+                </tr>
+                </table>
+                </div>`;
+
+                addPatientDetailspopupDiv.innerHTML += addPatientDetailspopupInfoHTMl;
+                }
+
+                // onclick vitals Edit button
+                function redirectToEditVitals() {
+                    
+                    const addPatientDetailspopupDiv = document.getElementById('addPatientDetailspopup');
+                    addPatientDetailspopupDiv.innerHTML = '';
+                    document.getElementById("overlay").style.display = "block";
+                    addPatientDetailspopupDiv.style.display = "table-column";
+
+
+                const addPatientDetailspopupInfoHTMl = `
+                <h2>Edit Vitals</h2>
+                <div class="entitySelectAndChoose">
+                <form id="editVitalsForm">
+                    <table id="editVitalsFormTable">
+                    <tr>
+                        <td>Id:</td>
+                        <td>
+                            <input readonly type="text" name="id" id="id" value="${vitals.id}"/>
+                        </td>
+                    </tr>
+                        <tr>
+                        <td>Pulse Rate :</td>
+                        <td>
+                            <input  type="text" name="pulseRate" id="pulseRate" value="${vitals.pulseRate}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Blood pressure :</td>
+                        <td>
+                            <input  type="text" name="bloodPressure" id="bloodPressure" value="${vitals.bloodPressure}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Respiration :</td>
+                        <td>
+                            <input type="text" name="respiration" id="respiration" value="${vitals.respiration}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>SPO 2 :</td>
+                        <td>
+                            <input type="text" name="spo2" id="spo2" value="${vitals.spo2}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Time Of Measurement :</td>
+                        <td>
+                            <input readonly type="text" name="timeOfMeasurement" id="timeOfMeasurement" value="${vitals.timeOfMeasurement}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                       <td>Patient :</td>
+                        <td>
+                            <input readonly type="text" name="patient" id="patient" value="${vitals.patient.email}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Added By :</td>
+                        <td>
+                            <input readonly type="text" name="createdBy" id="createdBy" value="${vitals.createdBy}"/>
+                        </td>
+                    </tr>
+                    </table>
+               
+                </form>
+                <table id="addCancleButtons">
+                <tr>
+                    <td>
+                        <button style="float: right;" id="addPatientDetailsCancle" onclick="closeaddPatientDetailsInfoForm()">Cancel</button>
+                    </td>
+                    <td>
+                        <a href="#" onclick="editVitalsMethod(document.getElementById('id').value,
+                                                            document.getElementById('pulseRate').value,document.getElementById('bloodPressure').value,
+                                                            document.getElementById('respiration').value,document.getElementById('spo2').value)">
+                            <button style="float: right;" id="editVitalsButtonConfirm">Submit</button>
+                        </a>
+                    </td>
+                </tr>
+                </table>
+                </div>`;
+
+                addPatientDetailspopupDiv.innerHTML += addPatientDetailspopupInfoHTMl;
+                }
+
+                // onclick comorbidity View button
+                function redirectToViewVitals() {
+                    
+                    const addPatientDetailspopupDiv = document.getElementById('addPatientDetailspopup');
+                    addPatientDetailspopupDiv.innerHTML = '';
+                    document.getElementById("overlay").style.display = "block";
+                    addPatientDetailspopupDiv.style.display = "table-column";
+
+
+                const addPatientDetailspopupInfoHTMl = `
+                <h2>View Vitals</h2>
+                <div class="entitySelectAndChoose">
+                <form id="viewVitalsForm">
+                    <table id="viewVitalsFormTable">
+                    <tr>
+                        <td>Id:</td>
+                        <td>
+                            <input readonly type="text" name="id" id="id" value="${vitals.id}"/>
+                        </td>
+                    </tr>
+                        <tr>
+                        <td>Pulse Rate :</td>
+                        <td>
+                            <input readonly type="text" name="pulseRate" id="pulseRate" value="${vitals.pulseRate}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Blood pressure :</td>
+                        <td>
+                            <input readonly  type="text" name="bloodPressure" id="bloodPressure" value="${vitals.bloodPressure}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Respiration :</td>
+                        <td>
+                            <input readonly type="text" name="respiration" id="respiration" value="${vitals.respiration}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>SPO 2 :</td>
+                        <td>
+                            <input readonly type="text" name="spo2" id="spo2" value="${vitals.spo2}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Time Of Measurement :</td>
+                        <td>
+                            <input readonly type="text" name="timeOfMeasurement" id="timeOfMeasurement" value="${vitals.timeOfMeasurement}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                       <td>Patient :</td>
+                        <td>
+                            <input readonly type="text" name="patient" id="patient" value="${vitals.patient.email}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Added By :</td>
+                        <td>
+                            <input readonly type="text" name="createdBy" id="createdBy" value="${vitals.createdBy}"/>
+                        </td>
+                    </tr>
+                   <tr>
+                    <td>
+                        <a href="#" id="addPatientDetailsCancle" style="float: right;text-align:center;display: block;text-decoration: none;" onclick="closeaddPatientDetailsInfoForm()">Cancel</a>
+
+                    </td>
+                    </tr>
+    
+              
+                </table>
+                </div>
+                `;
+
+                addPatientDetailspopupDiv.innerHTML += addPatientDetailspopupInfoHTMl;
+                }
+
+
+                window.redirectToAddVitals = redirectToAddVitals;
+                window.redirectToEditVitals = redirectToEditVitals;
+                window.redirectToViewVitals = redirectToViewVitals;
+                
+            });
+                
+        }
+                </script>
+               
+                
+            </div>
+</body>
+</html>
