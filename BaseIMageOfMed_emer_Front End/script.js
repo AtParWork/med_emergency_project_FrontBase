@@ -313,7 +313,7 @@ function redirectVitals(){
 
 
 async function authenticate(username, password) {
-  const url = 'http://localhost:8080/api/authenticate';
+  const url = 'http://192.168.2.100:8080/api/authenticate';
   const bearertoken = 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImF1dGgiOiJST0xFX0FETUlOLFJPTEVfVVNFUiIsImV4cCI6MTcwNzQ5NzEyNH0.fRgZD557PezoakVdvo9-8mx2ZYhQaJq2r67y1CmJSrU8kr2CMfzpWT2kiMSwHvEaTNl8HweqZO7N5X2-nfiiYQ';
 
   const requestBody = {
@@ -360,7 +360,7 @@ async function authenticate(username, password) {
 // check authenticate
 
 async function getAuthenticateRedirect() {
-  const url = 'http://localhost:8080/api/authenticate';
+  const url = 'http://192.168.2.100:8080/api/authenticate';
   const token = localStorage.getItem('token');
 
   try {
@@ -394,7 +394,7 @@ async function fetchData() {
     return;
   }
 
-  const url = `http://localhost:8080/api/patients?page=0&size=${patientCount}`;
+  const url = `http://192.168.2.100:8080/api/patients?page=0&size=${patientCount}`;
 
   try {
     const response = await fetch(url, {
@@ -435,7 +435,7 @@ async function fetchPatients() {
     return;
   }
 
-  const url = `http://localhost:8080/api/patients?page=0&size=${patientCount}`;
+  const url = `http://192.168.2.100:8080/api/patients?page=0&size=${patientCount}`;
 
   try {
     const response = await fetch(url, {
@@ -469,7 +469,7 @@ async function fetchComorbidityData() {
     return;
   }
   const comorbidityCount=await fetchComorbidityCount()
-  const url = `http://localhost:8080/api/comorbidities?page=0&size=${comorbidityCount}`;
+  const url = `http://192.168.2.100:8080/api/comorbidities?page=0&size=${comorbidityCount}`;
 
   try {
     const response = await fetch(url, {
@@ -507,7 +507,7 @@ async function fetchDisabilityData() {
     return;
   }
   const disabilityCount=await fetchDisabilityCount()
-  const url = `http://localhost:8080/api/disabilities?page=0&size=${disabilityCount}`;
+  const url = `http://192.168.2.100:8080/api/disabilities?page=0&size=${disabilityCount}`;
 
   try {
     const response = await fetch(url, {
@@ -545,7 +545,7 @@ async function fetchAllPatientsVitalsData() {
     return;
   }
   const vitalsCount=await fetchAllPatientsVitalsCount()
-  const url = `http://localhost:8080/api/patient-vitals?page=0&size=${vitalsCount}`;
+  const url = `http://192.168.2.100:8080/api/patient-vitals?page=0&size=${vitalsCount}`;
 
   try {
     const response = await fetch(url, {
@@ -578,7 +578,7 @@ async function fetchAllPatientsVitalsData() {
 //fetchnig patients count
 
 async function fetchPatientCount() {
-  const url = 'http://localhost:8080/api/patients/count';
+  const url = 'http://192.168.2.100:8080/api/patients/count';
   const token = localStorage.getItem('token');
 
   try {
@@ -608,7 +608,7 @@ async function fetchPatientCount() {
 //fetchnig comorbidity count
 
 async function fetchComorbidityCount() {
-  const url = 'http://localhost:8080/api/comorbidities/count';
+  const url = 'http://192.168.2.100:8080/api/comorbidities/count';
   const token = localStorage.getItem('token');
 
   try {
@@ -638,7 +638,7 @@ async function fetchComorbidityCount() {
 //fetchnig disability count
 
 async function fetchDisabilityCount() {
-  const url = 'http://localhost:8080/api/disabilities/count';
+  const url = 'http://192.168.2.100:8080/api/disabilities/count';
   const token = localStorage.getItem('token');
 
   try {
@@ -668,7 +668,7 @@ async function fetchDisabilityCount() {
 //fetchnig vitals count
 
 async function fetchAllPatientsVitalsCount() {
-  const url = 'http://localhost:8080/api/patient-vitals/count';
+  const url = 'http://192.168.2.100:8080/api/patient-vitals/count';
   const token = localStorage.getItem('token');
 
   try {
@@ -698,7 +698,7 @@ async function fetchAllPatientsVitalsCount() {
 // patching patient
 
 async function patchPatient(email,firstName,lastName,mobileNumber,age,gender,id) {
-  const url = `http://localhost:8080/api/patients/${id}`;
+  const url = `http://192.168.2.100:8080/api/patients/${id}`;
   const token = localStorage.getItem('token');
   const requestBody = {
     
@@ -737,7 +737,7 @@ async function patchPatient(email,firstName,lastName,mobileNumber,age,gender,id)
 // patching/edit comorbidity
 
 async function editComorbidity(id,name) {
-  const url = `http://localhost:8080/api/comorbidities/${id}`;
+  const url = `http://192.168.2.100:8080/api/comorbidities/${id}`;
   const token = localStorage.getItem('token');
   console.log(name);
   const requestBody = {
@@ -771,7 +771,7 @@ async function editComorbidity(id,name) {
 // patching/edit disability
 
 async function editDisability(id,name) {
-  const url = `http://localhost:8080/api/disabilities/${id}`;
+  const url = `http://192.168.2.100:8080/api/disabilities/${id}`;
   const token = localStorage.getItem('token');
   console.log(name);
   const requestBody = {
@@ -805,7 +805,7 @@ async function editDisability(id,name) {
 // patching/edit vitals
 
 async function editVitals(id,pulseRate,bloodPressure,respiration,spo2) {
-  const url = `http://localhost:8080/api/patient-vitals/${id}`;
+  const url = `http://192.168.2.100:8080/api/patient-vitals/${id}`;
   const token = localStorage.getItem('token');
   
   const requestBody = {
@@ -844,7 +844,7 @@ async function editVitals(id,pulseRate,bloodPressure,respiration,spo2) {
 // adding new Patient
 
 async function addPatient(email,firstName,lastName,mobileNumber,age,gender) {
-  const url = "http://localhost:8080/api/patients";
+  const url = "http://192.168.2.100:8080/api/patients";
   const token = localStorage.getItem('token');
   const requestBody = {
     
@@ -897,7 +897,7 @@ async function addPatient(email,firstName,lastName,mobileNumber,age,gender) {
 
 
 async function addComorbidity(name) {
-  const url = "http://localhost:8080/api/comorbidities";
+  const url = "http://192.168.2.100:8080/api/comorbidities";
   const token = localStorage.getItem('token');
   const requestBody = {
     
@@ -937,7 +937,7 @@ async function addComorbidity(name) {
 //adding new Disability
 
 async function addDisability(name) {
-  const url = "http://localhost:8080/api/disabilities";
+  const url = "http://192.168.2.100:8080/api/disabilities";
   const token = localStorage.getItem('token');
   const requestBody = {
     
@@ -977,7 +977,7 @@ async function addDisability(name) {
 //  getting patient by id
 async function fetchPatientById(patientId) {
   console.log(patientId);
-  const url = `http://localhost:8080/api/patients/${patientId}`;
+  const url = `http://192.168.2.100:8080/api/patients/${patientId}`;
   const token = localStorage.getItem('token');
 
   try {
@@ -1002,7 +1002,7 @@ async function fetchPatientById(patientId) {
 //  getting patientComorbidities by patient id
 async function fetchPatientComorbiditiesById(patientId) {
   console.log(patientId);
-  const url = `http://localhost:8080/api/patient-comorbidities?patientId.equals=${patientId}&page=0&size=20`;
+  const url = `http://192.168.2.100:8080/api/patient-comorbidities?patientId.equals=${patientId}&page=0&size=20`;
   const token = localStorage.getItem('token');
 
   try {
@@ -1028,7 +1028,7 @@ async function fetchPatientComorbiditiesById(patientId) {
 
 async function fetchPatientDisabilitiesById(patientId) {
   console.log(patientId);
-  const url = `http://localhost:8080/api/patient-disabilities?patientId.equals=${patientId}&page=0&size=20`;
+  const url = `http://192.168.2.100:8080/api/patient-disabilities?patientId.equals=${patientId}&page=0&size=20`;
   const token = localStorage.getItem('token');
 
   try {
@@ -1053,7 +1053,7 @@ async function fetchPatientDisabilitiesById(patientId) {
 
 async function fetchPatientVitalsById(patientId) {
   console.log(patientId);
-  const url = `http://localhost:8080/api/patient-vitals?patientId.equals=${patientId}&page=0&size=20`;
+  const url = `http://192.168.2.100:8080/api/patient-vitals?patientId.equals=${patientId}&page=0&size=20`;
   const token = localStorage.getItem('token');
 
   try {
@@ -1078,7 +1078,7 @@ async function fetchPatientVitalsById(patientId) {
 
 async function fetchPatientCommentsById(patientId) {
   console.log(patientId);
-  const url = `http://localhost:8080/api/comments?patientId.equals=${patientId}&page=0&size=20`;
+  const url = `http://192.168.2.100:8080/api/comments?patientId.equals=${patientId}&page=0&size=20`;
   const token = localStorage.getItem('token');
 
   try {
@@ -1103,7 +1103,7 @@ async function fetchPatientCommentsById(patientId) {
 //getting comorbidities
 async function fetchAllComorbidities() {
   
-  const url = `http://localhost:8080/api/comorbidities?page=0&size=10`;
+  const url = `http://192.168.2.100:8080/api/comorbidities?page=0&size=10`;
   const token = localStorage.getItem('token');
 
   try {
@@ -1127,7 +1127,7 @@ async function fetchAllComorbidities() {
 //getting comorbidity by id
 async function fetchComorbidityById(id) {
   
-  const url = `http://localhost:8080/api/comorbidities/${id}`;
+  const url = `http://192.168.2.100:8080/api/comorbidities/${id}`;
   const token = localStorage.getItem('token');
 
   try {
@@ -1153,7 +1153,7 @@ async function fetchComorbidityById(id) {
 //getting vitals
 async function fetchAllVitals() {
   
-  const url = `http://localhost:8080/api/patient-vitals?page=0&size=10`;
+  const url = `http://192.168.2.100:8080/api/patient-vitals?page=0&size=10`;
   const token = localStorage.getItem('token');
 
   try {
@@ -1178,7 +1178,7 @@ async function fetchAllVitals() {
 
 async function fetchAllDisabilities() {
   
-  const url = `http://localhost:8080/api/disabilities?page=0&size=10`;
+  const url = `http://192.168.2.100:8080/api/disabilities?page=0&size=10`;
   const token = localStorage.getItem('token');
 
   try {
@@ -1202,7 +1202,7 @@ async function fetchAllDisabilities() {
 //getting disability by id
 async function fetchDisabilityById(id) {
   
-  const url = `http://localhost:8080/api/disabilities/${id}`;
+  const url = `http://192.168.2.100:8080/api/disabilities/${id}`;
   const token = localStorage.getItem('token');
 
   try {
@@ -1229,7 +1229,7 @@ async function fetchDisabilityById(id) {
 
 async function fetchAllComments() {
   
-  const url = `http://localhost:8080/api/comments?page=0&size=10`;
+  const url = `http://192.168.2.100:8080/api/comments?page=0&size=10`;
   const token = localStorage.getItem('token');
 
   try {
@@ -1254,7 +1254,7 @@ async function fetchAllComments() {
 
 async function fetchAllUsers() {
   
-  const url = `http://localhost:8080/api/users?page=0&size=10`;
+  const url = `http://192.168.2.100:8080/api/users?page=0&size=10`;
   const token = localStorage.getItem('token');
 
   try {
@@ -1278,7 +1278,7 @@ async function fetchAllUsers() {
 //posting patientComorbidity
 
 async function addPatientComorbidity(patientId,patientComorbidityId) {
-  const url = "http://localhost:8080/api/patient-comorbidities";
+  const url = "http://192.168.2.100:8080/api/patient-comorbidities";
   const token = localStorage.getItem('token');
   const patientDataById =await fetchPatientById(patientId);
   const comorbidityById =await fetchComorbidityById(patientComorbidityId);
@@ -1316,7 +1316,7 @@ async function addPatientComorbidity(patientId,patientComorbidityId) {
 //posting patientDisability
 
 async function addPatientDisability(patientId,patientDisabilityId) {
-  const url = "http://localhost:8080/api/patient-disabilities";
+  const url = "http://192.168.2.100:8080/api/patient-disabilities";
   const token = localStorage.getItem('token');
   const patientDataById =await fetchPatientById(patientId);
   const disabilityById =await fetchDisabilityById(patientDisabilityId);
@@ -1354,7 +1354,7 @@ async function addPatientDisability(patientId,patientDisabilityId) {
 //posting patientVitals
 
 async function addPatientVitals(patientId,pulseRate,bloodPressure,respiration,spo2) {
-  const url = "http://localhost:8080/api/patient-vitals";
+  const url = "http://192.168.2.100:8080/api/patient-vitals";
   const token = localStorage.getItem('token');
   const patientDataById =await fetchPatientById(patientId);
 
@@ -1396,7 +1396,7 @@ async function addPatientVitals(patientId,pulseRate,bloodPressure,respiration,sp
 //posting patientComment
 
 async function addPatientComment(patientId,comment) {
-  const url = "http://localhost:8080/api/comments";
+  const url = "http://192.168.2.100:8080/api/comments";
   const token = localStorage.getItem('token');
   const patientDataById =await fetchPatientById(patientId);
 
@@ -1435,7 +1435,7 @@ async function addPatientComment(patientId,comment) {
 
 async function addiVtals(pulseRate,bloodPressure,respiration,spo2,patientId) {
 
-  const url = "http://localhost:8080/api/patient-vitals";
+  const url = "http://192.168.2.100:8080/api/patient-vitals";
   const token = localStorage.getItem('token');
   const patientDataById =await fetchPatientById(patientId);
 
